@@ -6,6 +6,32 @@ import TextField from "./TextField";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  //Event Handlers
+  const handleSubmit = async (values, actions) => {
+    alert(JSON.stringify(values, null, 2));
+    actions.resetForm();
+const vals = {...values}
+try{
+    const response = await fetch('http://localhost:4000/', {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify(vals)
+    })
+    if (!response.ok || response.status >= 400) {
+        return;
+      }
+  
+      const data = await response.json();
+      if(!data) return
+      console.log(data);
+} catch(error){
+    console.error('Error', error)
+}
+  }
   return (
     <Formik
       initialValues={{ username: "", password: "" }}
@@ -19,10 +45,7 @@ const Login = () => {
           .min(6, "Password too short!")
           .max(28, "Password too long!"),
       })}
-      onSubmit={(values, actions) => {
-        alert(JSON.stringify(values, null, 2));
-        actions.resetForm();
-      }}
+      onSubmit={handleSubmit}
     >
       <VStack
         as={Form}

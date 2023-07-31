@@ -11,7 +11,7 @@ ReactDOM.render(
     <BrowserRouter>
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <div>Hi there my name is</div>
+      
       <App />
     </ChakraProvider></BrowserRouter>
   </React.StrictMode>,
